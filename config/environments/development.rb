@@ -17,6 +17,9 @@ Rails.application.configure do
   # Enable server timing
   config.server_timing = true
 
+  # TURN ON INLINE SOURCE MAPS (SO WE CAN DEBUG RAILS 7 BOOTSTRAP)
+  config.sass.inline_source_maps = true
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
