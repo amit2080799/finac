@@ -24,8 +24,6 @@ class ExpensesController < ApplicationController
 
   # POST /expenses or /expenses.json
   def create
-    # @expense = Expense.new(expense_params)
-
     data = {
       date: params['date'],
       expense_type: params['expense_type'],
