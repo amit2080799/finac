@@ -56,12 +56,8 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "sprockets-rails"
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
 gem 'devise', '~> 4.8'
 gem "haml-rails", "~> 2.0"
-
 gem "bootstrap", "~> 5.1.3"
-
 gem "sassc-rails", "~> 2.1"
-
 gem "importmap-rails", "~> 1.0"

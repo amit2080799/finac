@@ -5,3 +5,43 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+ExpenseType.create([
+  {
+    expense_type: 'maid'
+  },
+  {
+    expense_type: 'fuel'
+  }
+  ])
+
+PaymentMode.create([
+  {
+    name: 'PhonePe'
+  },
+  {
+    name: 'Cash'
+  },
+  {
+    name: 'Google Pay'
+  },
+  {
+    name: 'Amazon Pay'
+  },
+  {
+    name: 'Whatsapp UPI'
+  }
+])
+
+BankDetail.create([
+  {
+    name: 'HDFC'
+  },
+  {
+    name: 'Federal'
+  },
+  {
+    name: 'SBI'
+  }
+])
