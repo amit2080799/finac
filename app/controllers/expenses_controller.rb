@@ -24,8 +24,17 @@ class ExpensesController < ApplicationController
 
   # POST /expenses or /expenses.json
   def create
-    @expense = Expense.new(expense_params)
+    # @expense = Expense.new(expense_params)
 
+    data = {
+      date: params['date'],
+      expense_type: params['expense_type'],
+      payment_mode_name: params['payment_mode'],
+      bank_name: params['bank_name'],
+      description: params['description']
+    }.with_indifferent_access
+
+    @expense = Expense.create_expense(data)
     respond_to do |format|
       if @expense.save
         format.html { redirect_to expense_url(@expense), notice: 'Expense was successfully created.' }
@@ -62,13 +71,13 @@ class ExpensesController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_expense
-      @expense = Expense.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_expense
+    @expense = Expense.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def expense_params
-      params.fetch(:expense, {})
-    end
+  # Only allow a list of trusted parameters through.
+  def expense_params
+    params.fetch(:expense, {})
+  end
 end
