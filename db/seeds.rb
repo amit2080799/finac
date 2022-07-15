@@ -9,7 +9,7 @@
 
 ExpenseType.create([
   {
-    expense_type: 'maid'
+    expense_type: 'miscellaneous'
   },
   {
     expense_type: 'fuel'
