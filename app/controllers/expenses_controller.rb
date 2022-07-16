@@ -28,16 +28,8 @@ class ExpensesController < ApplicationController
 
   # POST /expenses or /expenses.json
   def create
-    data = {
-      date: params['date'],
-      expense_type: params['expense_type'],
-      payment_mode_name: params['payment_mode'],
-      bank_name: params['bank_name'],
-      description: params['description'],
-      amount: params['amount']
-    }.with_indifferent_access
+    @expense = Expense.create(construct_expense_params_data)
 
-    @expense = Expense.create(data)
     respond_to do |format|
       if @expense.save
         format.html { redirect_to expense_url(@expense), notice: 'Expense was successfully created.' }
@@ -82,5 +74,16 @@ class ExpensesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def expense_params
     params.fetch(:expense, {})
+  end
+
+  def construct_expense_params_data
+    {
+      date: params['date'],
+      expense_type: params['expense_type'],
+      payment_mode_name: params['payment_mode'],
+      bank_name: params['bank_name'],
+      description: params['description'],
+      amount: params['amount']
+    }.with_indifferent_access
   end
 end
