@@ -6,7 +6,7 @@ class ExpensesController < ApplicationController
 
   # GET /expenses or /expenses.json
   def index
-    @expenses = Expense.all
+    @expenses = Expense.construct_expense_data
   end
 
   # GET /expenses/1 or /expenses/1.json
@@ -15,6 +15,10 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/new
   def new
+    expense_data = Expense.fetch_expense_data
+    @expense_types = expense_data[0]
+    @payment_modes = expense_data[1]
+    @bank_details = expense_data[2]
     @expense = Expense.new
   end
 
@@ -24,7 +28,7 @@ class ExpensesController < ApplicationController
 
   # POST /expenses or /expenses.json
   def create
-    @expense = Expense.new(expense_params)
+    @expense = Expense.create(construct_expense_params_data)
 
     respond_to do |format|
       if @expense.save
@@ -62,13 +66,24 @@ class ExpensesController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_expense
-      @expense = Expense.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_expense
+    @expense = Expense.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def expense_params
-      params.fetch(:expense, {})
-    end
+  # Only allow a list of trusted parameters through.
+  def expense_params
+    params.fetch(:expense, {})
+  end
+
+  def construct_expense_params_data
+    {
+      date: params['date'],
+      expense_type: params['expense_type'],
+      payment_mode_name: params['payment_mode'],
+      bank_name: params['bank_name'],
+      description: params['description'],
+      amount: params['amount']
+    }.with_indifferent_access
+  end
 end

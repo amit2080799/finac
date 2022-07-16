@@ -13,36 +13,36 @@
 
     %div.expense_types_field
       %label{:for => "expense-type-select"} Expense Type
-      %select.expense-select.form-select{"aria-label" => "Expense type selection", "name" => "expense-type-select"}
+      %select.expense-select.form-select{"aria-label" => "Expense type selection", "name" => "expense_type"}
         %option{:selected => "selected"} Select expense type
-        - all_expense_types.each_with_index do |expense_type, index|
-          %option{:value => "#{expense_type}_index"} #{expense_type.expense_type}
+        - @expense_types.each_with_index do |expense_type, index|
+          %option{:value => expense_type.expense_type} #{expense_type.expense_type}
 
     %div.payment_modes_field
       %label{:for => "payment-mode-select"} Payment Mode
-      %select.expense-select.form-select{"aria-label" => "Payment mode selection", "name" => "payment-mode-select"}
+      %select.expense-select.form-select{"aria-label" => "Payment mode selection", "name" => "payment_mode"}
         %option{:selected => "selected"} Select payment mode
-        - all_payment_modes.each_with_index do |payment_mode, index|
-          %option{:value => "#{payment_mode}_index"} #{payment_mode.name}
+        - @payment_modes.each_with_index do |payment_mode, index|
+          %option{:value => payment_mode.name} #{payment_mode.name}
 
     %div.bank_details_field
       %label{:for => "bank-details-select"} Bank Name
-      %select.expense-select.form-select{"aria-label" => "Payment mode selection", "name" => "bank-details-select"}
+      %select.expense-select.form-select{"aria-label" => "Payment mode selection", "name" => "bank_name"}
         %option{:selected => "selected"} Select bank details
-        - all_bank_details.each_with_index do |bank_detail, index|
-          %option{:value => "#{bank_detail}_index"} #{bank_detail.name}
+        - @bank_details.each_with_index do |bank_detail, index|
+          %option{:value => bank_detail.name} #{bank_detail.name}
 
     %div.bank_details_field
       %label{:for => "amount-text"} Amount
       .input-group.mb-3.amount-text
         .input-group-prepend
           %span.input-group-text ₹
-        %input.form-control{:aria-label => "Amount", :name => "amount-text", :type => "text"}/
+        %input.form-control{:aria-label => "Amount", :name => "amount", :type => "text"}/
 
     %div.description_field
-      %label{:for => "amount-text"} Description
+      %label{:for => "description"} Description
       .input-group.description-text-area
-        %textarea.form-control{"aria-label" => "With textarea"}
+        %textarea.form-control{"aria-label" => "With textarea", "name" => "description"}
 
   %div.submit_button_wrapper
     %button.btn.btn-primary.submit-btn{:type => "submit"} Save

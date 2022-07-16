@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_15_104101) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_15_160208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,12 +46,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_15_104101) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_bank_details_on_name", unique: true
   end
 
   create_table "expense_types", force: :cascade do |t|
     t.string "expense_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["expense_type"], name: "index_expense_types_on_expense_type", unique: true
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -67,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_15_104101) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_payment_modes_on_name", unique: true
   end
 
   create_table "payments", force: :cascade do |t|
