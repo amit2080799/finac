@@ -6,7 +6,7 @@ class ExpensesController < ApplicationController
 
   # GET /expenses or /expenses.json
   def index
-    @expenses = Expense.all
+    @expenses = Expense.construct_expense_data
   end
 
   # GET /expenses/1 or /expenses/1.json
@@ -15,6 +15,10 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/new
   def new
+    expense_data = Expense.fetch_expense_data
+    @expense_types = expense_data[0]
+    @payment_modes = expense_data[1]
+    @bank_details = expense_data[2]
     @expense = Expense.new
   end
 
@@ -29,10 +33,11 @@ class ExpensesController < ApplicationController
       expense_type: params['expense_type'],
       payment_mode_name: params['payment_mode'],
       bank_name: params['bank_name'],
-      description: params['description']
+      description: params['description'],
+      amount: params['amount']
     }.with_indifferent_access
 
-    @expense = Expense.create_expense(data)
+    @expense = Expense.create(data)
     respond_to do |format|
       if @expense.save
         format.html { redirect_to expense_url(@expense), notice: 'Expense was successfully created.' }

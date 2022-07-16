@@ -14,15 +14,16 @@
           %th Payment Mode
           %th Bank Name
           %th Amount
+          %th Description
 
       %tbody
-        - expenses = construct_expense_data
-        - expenses.each do |expense|
+        - @expenses.each do |expense|
           %tr
             %td= expense['date']
             %td= expense['expense_type']
             %td= expense['payment_mode']
             %td= expense['bank_name']
             %td= expense['amount']
+            %td= expense['description']
 
 %br
