@@ -24,6 +24,11 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/1/edit
   def edit
+    @expense = Expense.find_by(id: params['id'].to_i)
+    expense_data = Expense.fetch_expense_data
+    @expense_types = expense_data[0]
+    @payment_modes = expense_data[1]
+    @bank_details = expense_data[2]
   end
 
   # POST /expenses or /expenses.json
