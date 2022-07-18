@@ -4,6 +4,7 @@
   margin: auto;
   margin-top: 1%;
   width: 80%;
+  background-color: #f2f2f2;
   border: none;
 
   .wrapper_header {
@@ -19,6 +20,7 @@
 
   .expenses_card_body {
     text-align: center;
+    background-color: #ffffff;
   }
 
   .expenses_listing_header {
@@ -46,6 +48,7 @@
       width: 50%;
       margin: 2% auto;
       position: relative;
+      background-color: #ffffff;
   }
 
   .expense-select {

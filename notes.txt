@@ -25,3 +25,97 @@ views/expenses/index.html.haml
             %td= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+= label_tag 'exp_type', 'Expense Type'
+%input{ :type=>"text", :required => true, :id => 'exp_type' }
+
+
+%label{:for => "cars"} Choose a car:
+%select#cars{:name => "cars"}
+  %option{:value => "volvo"} Volvo
+  %option{:value => "saab"} Saab
+  %option{:value => "opel"} Opel
+  %option{:value => "audi"} Audi
+
+
+
+
+
+  = form_for @expense do |f|
+    - if @expense.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@expense.errors.count, "error")} prohibited this expense from being saved:"
+        %ul
+          - @expense.errors.full_messages.each do |message|
+            %li= message
+
+    .container.mt-3
+    %h2 Dropdowns
+    .dropdown
+      %button.btn.btn-primary.dropdown-toggle{"data-bs-toggle" => "dropdown", :type => "button"}
+        Dropdown button
+      %ul.dropdown-menu
+        %li
+          %a.dropdown-item{:href => "#"} Link 1
+        %li
+          %a.dropdown-item{:href => "#"} Link 2
+        %li
+          %a.dropdown-item{:href => "#"} Link 3
+
+    .actions
+      = f.submit 'Save'
+
+
+      = link_to 'Back', expenses_path
+
+
+
+
+
+
+      %h1 Editing expense
+
+      = render 'form'
+
+      = link_to 'Show', @expense
+      \|
+      = link_to 'Back', expenses_path
+
+
+
+      .container
+        .row
+          .col-sm-6
+            .form-group
+              #datetimepicker1.input-group.date
+                %input.form-control{:type => "text"}/
+                %span.input-group-addon
+                  %span.glyphicon.glyphicon-calendar
+          = javascript_include_tag "expenses"
+
+
+
+          %button.btn.btn-primary.edit-btn{:type => "button"} Edit
