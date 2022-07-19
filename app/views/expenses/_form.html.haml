@@ -6,47 +6,51 @@
         - @expense.errors.full_messages.each do |message|
           %li= message
 
-  %div.fields_wrapper
-    %div.date_field
-      %label{:for => "date"} Date
-      %input#date{:name => "date", :type => "date", :value => @expense.date}
+  %section#main-body
+    .container
+      .row
+        / Container for main page display content
+        .col-xs-12.main-content
+          .header-lined
+            %div.expenses_listing_header
+              %h3
+                Add New Expense
+            .row
+              .form-group.col-sm-3
+                %label{:for => "date"} Date
+                %input.form-control{:name => "date", :type => "date", :value => @expense.date}
+              .form-group.col-sm-3
+                %label{:for => "expense-type-select"} Expense Type
+                %select.form-select{"aria-label" => "Expense type selection", "name" => "expense_type"}
+                  %option{:selected => "selected"}
+                    = @expense.try(:expense_type).try(:expense_type)
+                  - @expense_types.each_with_index do |expense_type, index|
+                    %option{:value => expense_type.expense_type} #{expense_type.expense_type}
+          .row
+            .form-group.col-sm-3
+              %label{:for => "payment-mode-select"} Payment Mode
+              %select.form-select{"aria-label" => "Payment mode selection", "name" => "payment_mode"}
+                %option{:selected => "selected"}
+                  = @expense.try(:payment).try(:payment_mode).try(:name)
+                - @payment_modes.each_with_index do |payment_mode, index|
+                  %option{:value => payment_mode.name} #{payment_mode.name}
+          .row
+            .form-group.col-sm-3
+              %label{:for => "bank-details-select"} Bank Name
+              %select.form-select{"aria-label" => "Payment mode selection", "name" => "bank_name"}
+                %option{:selected => "selected"}
+                  = @expense.try(:payment).try(:bank_detail).try(:name)
+                - @bank_details.each_with_index do |bank_detail, index|
+                  %option{:value => bank_detail.name} #{bank_detail.name}
+            .form-group.col-sm-3
+              %label{:for => "amount-text"} Amount
+              .input-group.mb-3.amount-text
+                .input-group-prepend
+                  %span.input-group-text ₹
+                %input.form-control{:aria-label => "Amount", :name => "amount", :type => "text", :value => @expense.try(:payment).try(:amount)}/
 
-    %div.expense_types_field
-      %label{:for => "expense-type-select"} Expense Type
-      %select.expense-select.form-select{"aria-label" => "Expense type selection", "name" => "expense_type"}
-        %option{:selected => "selected"}
-          = @expense.try(:expense_type).try(:expense_type)
-        - @expense_types.each_with_index do |expense_type, index|
-          %option{:value => expense_type.expense_type} #{expense_type.expense_type}
-
-    %div.payment_modes_field
-      %label{:for => "payment-mode-select"} Payment Mode
-      %select.expense-select.form-select{"aria-label" => "Payment mode selection", "name" => "payment_mode"}
-        %option{:selected => "selected"}
-          = @expense.try(:payment).try(:payment_mode).try(:name)
-        - @payment_modes.each_with_index do |payment_mode, index|
-          %option{:value => payment_mode.name} #{payment_mode.name}
-
-    %div.bank_details_field
-      %label{:for => "bank-details-select"} Bank Name
-      %select.expense-select.form-select{"aria-label" => "Payment mode selection", "name" => "bank_name"}
-        %option{:selected => "selected"}
-          = @expense.try(:payment).try(:bank_detail).try(:name)
-        - @bank_details.each_with_index do |bank_detail, index|
-          %option{:value => bank_detail.name} #{bank_detail.name}
-
-    %div.amount_field
-      %label{:for => "amount-text"} Amount
-      .input-group.mb-3.amount-text
-        .input-group-prepend
-          %span.input-group-text ₹
-        %input.form-control{:aria-label => "Amount", :name => "amount", :type => "text", :value => @expense.try(:payment).try(:amount)}/
-
-    %div.description_field
-      %label{:for => "description"} Description
-      .input-group.description-text-area
-        %textarea.form-control{"aria-label" => "With textarea", "name" => "description"}
-          = @expense.description
-
-  %div.submit_button_wrapper
-    %button.btn.btn-primary.submit-btn{:type => "submit"} Save
+          .form-group
+            %label{:for => "description"} Description
+            .input-group.description-text-area
+              %textarea.form-control{"aria-label" => "With textarea", "name" => "description", "rows" => 12}
+                = @expense.description

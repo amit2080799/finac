@@ -4,7 +4,6 @@
   margin: auto;
   margin-top: 1%;
   width: 80%;
-  background-color: #f2f2f2;
   border: none;
 
   .wrapper_header {
@@ -19,11 +18,6 @@
   }
 
   .expenses_card_body {
-    text-align: center;
-    background-color: #ffffff;
-  }
-
-  .expenses_listing_header {
     text-align: center;
   }
 
@@ -48,17 +42,6 @@
       width: 50%;
       margin: 2% auto;
       position: relative;
-      background-color: #ffffff;
-  }
-
-  .expense-select {
-    width: 50%;
-    float: right;
-  }
-
-  #date {
-    width: 50%;
-    float:right;
   }
 
   label {
@@ -82,4 +65,17 @@
       float: right;
     }
   }
+
+  .expense_form{
+    margin-top: 2%;
+  }
+}
+
+div.expenses_listing_header h3 {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding: 6px 0;
+  border-bottom: 0.1px solid #ccc;
+  font-weight: 400;
+  color: #058;
 }
