@@ -15,17 +15,17 @@
             %div.expenses_listing_header
               %h3
                 Add New Expense
-            .row
-              .form-group.col-sm-3
-                %label{:for => "date"} Date
-                %input.form-control{:name => "date", :type => "date", :value => @expense.date}
-              .form-group.col-sm-3
-                %label{:for => "expense-type-select"} Expense Type
-                %select.form-select{"aria-label" => "Expense type selection", "name" => "expense_type"}
-                  %option{:selected => "selected"}
-                    = @expense.try(:expense_type).try(:expense_type)
-                  - @expense_types.each_with_index do |expense_type, index|
-                    %option{:value => expense_type.expense_type} #{expense_type.expense_type}
+          .row
+            .form-group.col-sm-3
+              %label{:for => "date"} Date
+              %input.form-control{:name => "date", :type => "date", :value => @expense.date}
+            .form-group.col-sm-3
+              %label{:for => "expense-type-select"} Expense Type
+              %select.form-select{"aria-label" => "Expense type selection", "name" => "expense_type"}
+                %option{:selected => "selected"}
+                  = @expense.try(:expense_type).try(:expense_type)
+                - @expense_types.each_with_index do |expense_type, index|
+                  %option{:value => expense_type.expense_type} #{expense_type.expense_type}
           .row
             .form-group.col-sm-3
               %label{:for => "payment-mode-select"} Payment Mode
