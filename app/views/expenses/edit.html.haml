@@ -1,14 +1,3 @@
-%div.card.expenses_card
-  %div.wrapper_header
-    %div
-    %div.expenses_listing_header.expenses_listing_header_text
-      Edit Expense
-    %div.expenses_listing_header
-      = link_to 'Show', @expense
-  %div.card-body.form-wrapper
-    %div.expense_form
-      = render 'form'
-
-= link_to 'Back', expenses_path, class: 'link'
+= render 'form'
 
 %br

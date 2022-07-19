@@ -44,13 +44,15 @@
                   %option{:value => bank_detail.name} #{bank_detail.name}
             .form-group.col-sm-3
               %label{:for => "amount-text"} Amount
-              .input-group.mb-3.amount-text
+              .input-group.mb-3
                 .input-group-prepend
                   %span.input-group-text ₹
                 %input.form-control{:aria-label => "Amount", :name => "amount", :type => "text", :value => @expense.try(:payment).try(:amount)}/
 
           .form-group
             %label{:for => "description"} Description
-            .input-group.description-text-area
+            .input-group
               %textarea.form-control{"aria-label" => "With textarea", "name" => "description", "rows" => 12}
                 = @expense.description
+        %div.submit-btn-wrapper
+          %input.submit-btn.btn.btn-primary{:type => "submit", :value => "Save"}/
