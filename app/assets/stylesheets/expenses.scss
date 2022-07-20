@@ -52,3 +52,11 @@ div.expenses_listing_header h3 {
 .wrapper_header > div {
   width: 100%;
 }
+
+.new_expense_btn_link {
+  position: relative;
+  float: right;
+  text-decoration: none;
+  padding: 1%;
+  font-size: 2vh;
+}
