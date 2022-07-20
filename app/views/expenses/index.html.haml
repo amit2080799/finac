@@ -1,32 +1,38 @@
-%div.card.expenses_card
-  %div.wrapper_header
-    %div
-    %div.expenses_listing_header.expenses_listing_header_text
-      Expenses List
-    %div.expenses_listing_header
-      = link_to 'Add New Expense', new_expense_path, class: 'link'
-  %div.card-body.expenses_card_body
-    %table.table
-      %thead
-        %tr
-          %th Date
-          %th Expense Type
-          %th Payment Mode
-          %th Bank Name
-          %th Amount
-          %th Description
+%section#main-body
+  .container
+    .row
+      / Container for main page display content
+      .col-xs-12.main-content
+        .header-lined
+          .row
+            .col.expenses_listing_header
+              %h3
+                Expenses List
+                = link_to 'Add New Expense', new_expense_path, class: 'new_expense_btn_link'
 
-      %tbody
-        - @expenses.each do |expense|
-          %tr
-            %td= expense[:date]
-            %td= expense[:expense_type]
-            %td= expense[:payment_mode]
-            %td= expense[:bank_name]
-            %td= expense[:amount]
-            %td= expense[:description]
-            %td
-              %div.edit-btn
-                = link_to 'Edit', edit_expense_path(expense)
+        .row
+          .form-group.col-sm-12
+            %table.table
+              %thead
+                %tr
+                  %th Date
+                  %th Expense Type
+                  %th Payment Mode
+                  %th Bank Name
+                  %th Amount
+                  %th Description
+
+              %tbody
+                - @expenses.each do |expense|
+                  %tr
+                    %td= expense[:date]
+                    %td= expense[:expense_type]
+                    %td= expense[:payment_mode]
+                    %td= expense[:bank_name]
+                    %td= expense[:amount]
+                    %td= expense[:description]
+                    %td
+                      %div.edit-btn
+                        = link_to 'Edit', edit_expense_path(expense)
 
 %br

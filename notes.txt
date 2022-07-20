@@ -27,6 +27,9 @@ views/expenses/index.html.haml
 %br
 
 
+https://technohelpindia.com/client/submitticket.php?step=2&deptid=1
+
+
 
 
 
@@ -119,3 +122,11 @@ views/expenses/index.html.haml
 
 
           %button.btn.btn-primary.edit-btn{:type => "button"} Edit
+
+
+
+
+
+
+          %div.expenses_listing_header
+            = link_to 'Back', expenses_path, class: 'link'

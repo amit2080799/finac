@@ -4,82 +4,59 @@
   margin: auto;
   margin-top: 1%;
   width: 80%;
-  background-color: #f2f2f2;
   border: none;
-
-  .wrapper_header {
-    display: flex;                  /* establish flex container */
-    flex-direction: row;            /* default value; can be omitted */
-    flex-wrap: nowrap;              /* default value; can be omitted */
-    justify-content: space-between; /* switched from default (flex-start, see below) */
-  }
-
-  .wrapper_header > div {
-    width: 100%;
-  }
-
-  .expenses_card_body {
-    text-align: center;
-    background-color: #ffffff;
-  }
-
-  .expenses_listing_header {
-    text-align: center;
-  }
-
-  .expenses_listing_header_text {
-    color: slateblue;
-    font-size: 3vh;
-  }
-
-  .link {
-    position: absolute;
-    text-decoration: none;
-    padding: 1%;
-    font-size: 2vh;
-  }
-
-  .fields_wrapper > * {
-    margin: 2%;
-  }
-
-  .form-wrapper {
-      border: 1px solid #e6e6e6;
-      width: 50%;
-      margin: 2% auto;
-      position: relative;
-      background-color: #ffffff;
-  }
-
-  .expense-select {
-    width: 50%;
-    float: right;
-  }
-
-  #date {
-    width: 50%;
-    float:right;
-  }
 
   label {
     margin-bottom: 2%;
   }
+}
 
-  .amount-text {
-    width: 50%;
-    float: right;
-  }
+div.expenses_listing_header h3 {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding: 6px 0;
+  border-bottom: 0.1px solid #ccc;
+  font-weight: 400;
+  color: #058;
+}
 
-  .description-text-area {
-    width: 50%;
-    float: right;
-    top: -24px;
-  }
+.submit_button_wrapper {
+  margin: 10% 2%;
+}
 
-  .submit_button_wrapper {
-    margin: 10% 2%;
-    .submit-btn {
-      float: right;
-    }
-  }
+.submit-btn-wrapper {
+  text-align: right;
+  margin-top: 2%;
+}
+
+.submit-btn {
+  background-color: #337ab7;
+  color: #fff;
+  border-color: #2e6da4;
+}
+
+.link {
+  position: absolute;
+  text-decoration: none;
+  padding: 1%;
+  font-size: 2vh;
+}
+
+.wrapper_header {
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-between; /* switched from default (flex-start, see below) */
+}
+
+.wrapper_header > div {
+  width: 100%;
+}
+
+.new_expense_btn_link {
+  position: relative;
+  float: right;
+  text-decoration: none;
+  padding: 1%;
+  font-size: 2vh;
 }
