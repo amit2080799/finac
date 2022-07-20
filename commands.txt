@@ -1,0 +1,11 @@
+kill -INT $(cat tmp/pids/server.pid)
+
+lsof -wni tcp:3000
+
+kill -9 PID
+
+sh nohup.sh
+tail -f /tmp/rails_server.log
+
+nohup sh your-script.sh &
+nohup sh your-script.sh > /path/to/custom.out &
