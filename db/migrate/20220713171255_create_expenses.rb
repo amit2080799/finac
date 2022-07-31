@@ -4,14 +4,11 @@
 class CreateExpenses < ActiveRecord::Migration[7.0]
   def change
     create_table :expenses do |t|
-      t.integer :payment_id
       t.integer :expense_type_id
       t.date :date
 
       t.timestamps
     end
-
-    add_foreign_key :expenses, :payments, index: true
     add_foreign_key :expenses, :expense_types, index: true
   end
 end

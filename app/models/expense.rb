@@ -2,15 +2,17 @@
 
 # Expense model
 class Expense < ApplicationRecord
+  has_many :payments
   belongs_to :expense_type
-  belongs_to :payment
+
+  accepts_nested_attributes_for :payments
 
   def self.create(data)
     data['expense_type_id'] = ExpenseType.find_by(expense_type: data['expense_type']).try(:id)
     data['payment_mode_id'] = PaymentMode.find_by(name: data['payment_mode_name']).try(:id)
     data['bank_detail_id'] = BankDetail.find_by(name: data['bank_name']).try(:id)
 
-    Payment.create_payment(data).expenses.last
+    create_expense(data).expenses.last
   end
 
   def self.construct_expense_data
@@ -41,5 +43,19 @@ class Expense < ApplicationRecord
     @bank_details = BankDetail.all
 
     [@expense_types, @payment_modes, @bank_details]
+  end
+
+  def self.create_expense(data)
+    expense = {
+      date: data['date'],
+      expense_type_id: data['expense_type_id'],
+      description: data['description'],
+      payments_attributes: [{
+        bank_detail_id: data['bank_detail_id'],
+        payment_mode_id: data['payment_mode_id'],
+        amount: data['amount']
+      }]
+    }.with_indifferent_access
+    Expense.create(expense)
   end
 end

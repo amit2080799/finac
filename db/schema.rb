@@ -57,7 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_15_160208) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.integer "payment_id"
     t.integer "expense_type_id"
     t.date "date"
     t.datetime "created_at", null: false
@@ -73,11 +72,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_15_160208) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.integer "bank_detail_id"
     t.decimal "amount", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "payment_mode_id"
+    t.bigint "bank_detail_id"
+    t.bigint "expense_id"
+    t.index ["bank_detail_id"], name: "index_payments_on_bank_detail_id"
+    t.index ["expense_id"], name: "index_payments_on_expense_id"
     t.index ["payment_mode_id"], name: "index_payments_on_payment_mode_id"
   end
 
@@ -96,6 +98,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_15_160208) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "expenses", "expense_types"
-  add_foreign_key "expenses", "payments"
-  add_foreign_key "payments", "bank_details"
 end
