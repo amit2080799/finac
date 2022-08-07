@@ -21,7 +21,7 @@
               = f.date_field :date, as: :date, value: @expense.date, class: 'form-control'
             .form-group.col-sm-3
               %label{:for => "expense-type-select"} Expense Type
-              = f.select :expense_type, fetch_expense_types, { selected: @expense.try(:expense_type).try(:expense_type) }, { class: 'form-select' }
+              = f.select :expense_type, fetch_expense_types, { selected: @expense.try(:expense_type).try(:name) }, { class: 'form-select' }
           .row
             .form-group.col-sm-3
               %label{:for => "payment-mode-select"} Payment Mode

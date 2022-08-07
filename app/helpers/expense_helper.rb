@@ -3,7 +3,7 @@
 # ExpenseHelper module
 module ExpenseHelper
   def fetch_expense_types
-    @expense_types.map(&:expense_type)
+    @expense_types.map(&:name)
   end
 
   def fetch_payment_modes

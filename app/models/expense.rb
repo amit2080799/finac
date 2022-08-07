@@ -26,7 +26,7 @@ class Expense < ApplicationRecord
 
       expenses[index] = {}
       expenses[index][:date] = expense.date
-      expenses[index][:expense_type] = ExpenseType.find_by(id: expense.expense_type_id).try(:expense_type)
+      expenses[index][:expense_type] = ExpenseType.find_by(id: expense.expense_type_id).try(:name)
       payment_mode_id = payment.try(:payment_mode_id)
       bank_detail_id = payment.try(:bank_detail_id)
       expenses[index][:payment_mode] = PaymentMode.find_by(id: payment_mode_id).try(:name)
@@ -70,7 +70,7 @@ class Expense < ApplicationRecord
   end
 
   def fetch_associated_data(data)
-    data['expense_type_id'] = ExpenseType.find_by(expense_type: data['expense_type']).try(:id)
+    data['expense_type_id'] = ExpenseType.find_by(name: data['expense_type']).try(:id)
     data['payment_mode_id'] = PaymentMode.find_by(name: data['payment_mode']).try(:id)
     data['bank_detail_id'] = BankDetail.find_by(name: data['bank_name']).try(:id)
     data

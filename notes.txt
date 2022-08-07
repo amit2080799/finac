@@ -30,6 +30,9 @@ views/expenses/index.html.haml
 https://technohelpindia.com/client/submitticket.php?step=2&deptid=1
 
 
+https://kirshatrov.com/posts/kaminari-custom-query/
+
+
 
 
 
@@ -130,3 +133,8 @@ https://technohelpindia.com/client/submitticket.php?step=2&deptid=1
 
           %div.expenses_listing_header
             = link_to 'Back', expenses_path, class: 'link'
+
+
+
+
+            https://stackoverflow.com/questions/44817090/rails-5-association-one-to-one-updating-record-create-new-one
