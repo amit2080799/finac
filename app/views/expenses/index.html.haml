@@ -24,12 +24,13 @@
 
               %tbody
                 - @expenses.each do |expense|
+                  - payment = expense.payment
                   %tr
                     %td= expense[:date]
-                    %td= expense[:expense_type]
-                    %td= expense[:payment_mode]
-                    %td= expense[:bank_name]
-                    %td= expense[:amount]
+                    %td= expense.try(:expense_type).try(:name)
+                    %td= payment.try(:payment_mode).try(:name)
+                    %td= payment.try(:bank_detail).try(:name)
+                    %td= payment.try(:amount)
                     %td= expense[:description]
                     %td
                       %div.edit-btn

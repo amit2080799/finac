@@ -17,25 +17,8 @@ class Expense < ApplicationRecord
     update_expense_data(data)
   end
 
-  def self.construct_expense_data
-    expenses = []
-
-    Expense.includes(:payment).each_with_index do |expense, index|
-      payment = expense.payment
-      next if expense.date.nil? && payment.id.nil? && expense.expense_type_id.nil?
-
-      expenses[index] = {}
-      expenses[index][:date] = expense.date
-      expenses[index][:expense_type] = ExpenseType.find_by(id: expense.expense_type_id).try(:name)
-      payment_mode_id = payment.try(:payment_mode_id)
-      bank_detail_id = payment.try(:bank_detail_id)
-      expenses[index][:payment_mode] = PaymentMode.find_by(id: payment_mode_id).try(:name)
-      expenses[index][:bank_name] = BankDetail.find_by(id: bank_detail_id).try(:name)
-      expenses[index][:amount] = payment.try(:amount)
-      expenses[index][:description] = expense.try(:description)
-      expenses[index][:id] = expense.try(:id)
-    end
-    expenses.compact.sort_by { |expense| expense['date'] }
+  def self.fetch_expenses
+    Expense.includes({ payment: %i[bank_detail payment_mode] }, :expense_type)
   end
 
   def fetch_expense_data
