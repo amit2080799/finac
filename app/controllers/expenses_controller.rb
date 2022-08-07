@@ -35,7 +35,7 @@ class ExpensesController < ApplicationController
 
   # POST /expenses or /expenses.json
   def create
-    @expense = Expense.new.create_expense(construct_expense_params_data)
+    @expense = Expense.new.create_expense(expense_params)
 
     respond_to do |format|
       if @expense.save!
@@ -50,7 +50,7 @@ class ExpensesController < ApplicationController
 
   # PATCH/PUT /expenses/1 or /expenses/1.json
   def update
-    expense = @expense.update_expense(construct_expense_params_data)
+    expense = @expense.update_expense(expense_params)
 
     respond_to do |format|
       if expense
@@ -86,27 +86,11 @@ class ExpensesController < ApplicationController
       :date,
       :description,
       :expense_type_id,
+      :expense_type,
+      :payment_mode,
+      :bank_name,
+      :amount,
       payment_attributes: %i[id amount payment_mode_id bank_detail_id]
     )
-    # params.fetch(:expense, {}).permit(
-    #   :date,
-    #   :description,
-    #   :expense_type,
-    #   :payment_mode,
-    #   :bank_name,
-    #   :amount,
-    #   payment_attributes: %i[id amount payment_mode_id bank_detail_id]
-    # )
-  end
-
-  def construct_expense_params_data
-    {
-      date: params['expense']['date'],
-      expense_type: params['expense']['expense_type'],
-      payment_mode: params['expense']['payment_mode'],
-      bank_name: params['expense']['bank_name'],
-      description: params['expense']['description'],
-      amount: params['expense']['amount']
-    }.with_indifferent_access
   end
 end
