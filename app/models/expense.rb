@@ -2,30 +2,31 @@
 
 # Expense model
 class Expense < ApplicationRecord
-  has_many :payments
+  has_one :payment, dependent: :destroy
   belongs_to :expense_type
 
-  accepts_nested_attributes_for :payments
+  accepts_nested_attributes_for :payment
 
-  def self.create(data)
-    data['expense_type_id'] = ExpenseType.find_by(expense_type: data['expense_type']).try(:id)
-    data['payment_mode_id'] = PaymentMode.find_by(name: data['payment_mode_name']).try(:id)
-    data['bank_detail_id'] = BankDetail.find_by(name: data['bank_name']).try(:id)
+  def create_expense(data)
+    data = fetch_associated_data(data)
+    create_expense_data(data)
+  end
 
-    create_expense(data).expenses.last
+  def update_expense(data)
+    data = fetch_associated_data(data)
+    update_expense_data(data)
   end
 
   def self.construct_expense_data
     expenses = []
-    all_expenses = Expense.all
 
-    all_expenses.each_with_index do |expense, index|
-      next if expense.date.nil? && expense.payment_id.nil? && expense.expense_type_id.nil?
+    Expense.includes(:payment).each_with_index do |expense, index|
+      payment = expense.payment
+      next if expense.date.nil? && payment.id.nil? && expense.expense_type_id.nil?
 
       expenses[index] = {}
       expenses[index][:date] = expense.date
       expenses[index][:expense_type] = ExpenseType.find_by(id: expense.expense_type_id).try(:expense_type)
-      payment = Payment.find_by(id: expense.payment_id)
       payment_mode_id = payment.try(:payment_mode_id)
       bank_detail_id = payment.try(:bank_detail_id)
       expenses[index][:payment_mode] = PaymentMode.find_by(id: payment_mode_id).try(:name)
@@ -37,7 +38,7 @@ class Expense < ApplicationRecord
     expenses.compact.sort_by { |expense| expense['date'] }
   end
 
-  def self.fetch_expense_data
+  def fetch_expense_data
     @expense_types = ExpenseType.all
     @payment_modes = PaymentMode.all
     @bank_details = BankDetail.all
@@ -45,17 +46,33 @@ class Expense < ApplicationRecord
     [@expense_types, @payment_modes, @bank_details]
   end
 
-  def self.create_expense(data)
-    expense = {
+  def create_expense_data(data)
+    expense = construct_expense_params(data)
+    Expense.create(expense)
+  end
+
+  def update_expense_data(data)
+    expense = construct_expense_params(data)
+    update(expense)
+  end
+
+  def construct_expense_params(data)
+    {
       date: data['date'],
       expense_type_id: data['expense_type_id'],
       description: data['description'],
-      payments_attributes: [{
+      payment_attributes: {
         bank_detail_id: data['bank_detail_id'],
         payment_mode_id: data['payment_mode_id'],
         amount: data['amount']
-      }]
+      }
     }.with_indifferent_access
-    Expense.create(expense)
+  end
+
+  def fetch_associated_data(data)
+    data['expense_type_id'] = ExpenseType.find_by(expense_type: data['expense_type']).try(:id)
+    data['payment_mode_id'] = PaymentMode.find_by(name: data['payment_mode']).try(:id)
+    data['bank_detail_id'] = BankDetail.find_by(name: data['bank_name']).try(:id)
+    data
   end
 end

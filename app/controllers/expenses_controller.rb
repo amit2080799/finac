@@ -6,26 +6,28 @@ class ExpensesController < ApplicationController
 
   # GET /expenses or /expenses.json
   def index
+    # all_expenses = Expense.order(:date).page params[:page]
     @expenses = Expense.construct_expense_data
+    # Kaminari.paginate_array(@expenses).page(params[:page]).per(10)
+    # binding.pry
   end
 
   # GET /expenses/1 or /expenses/1.json
-  def show
-  end
+  def show; end
 
   # GET /expenses/new
   def new
-    expense_data = Expense.fetch_expense_data
+    @expense = Expense.new
+    expense_data = @expense.fetch_expense_data
     @expense_types = expense_data[0]
     @payment_modes = expense_data[1]
     @bank_details = expense_data[2]
-    @expense = Expense.new
   end
 
   # GET /expenses/1/edit
   def edit
     @expense = Expense.find_by(id: params['id'].to_i)
-    expense_data = Expense.fetch_expense_data
+    expense_data = @expense.fetch_expense_data
     @expense_types = expense_data[0]
     @payment_modes = expense_data[1]
     @bank_details = expense_data[2]
@@ -33,10 +35,10 @@ class ExpensesController < ApplicationController
 
   # POST /expenses or /expenses.json
   def create
-    @expense = Expense.create(construct_expense_params_data)
+    @expense = Expense.new.create_expense(construct_expense_params_data)
 
     respond_to do |format|
-      if @expense.save
+      if @expense.save!
         format.html { redirect_to expense_url(@expense), notice: 'Expense was successfully created.' }
         format.json { render :show, status: :created, location: @expense }
       else
@@ -48,8 +50,10 @@ class ExpensesController < ApplicationController
 
   # PATCH/PUT /expenses/1 or /expenses/1.json
   def update
+    expense = @expense.update_expense(construct_expense_params_data)
+
     respond_to do |format|
-      if @expense.update(expense_params)
+      if expense
         format.html { redirect_to expense_url(@expense), notice: 'Expense was successfully updated.' }
         format.json { render :show, status: :ok, location: @expense }
       else
@@ -78,17 +82,31 @@ class ExpensesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def expense_params
-    params.fetch(:expense, {})
+    params.fetch(:expense, {}).permit(
+      :date,
+      :description,
+      :expense_type_id,
+      payment_attributes: %i[id amount payment_mode_id bank_detail_id]
+    )
+    # params.fetch(:expense, {}).permit(
+    #   :date,
+    #   :description,
+    #   :expense_type,
+    #   :payment_mode,
+    #   :bank_name,
+    #   :amount,
+    #   payment_attributes: %i[id amount payment_mode_id bank_detail_id]
+    # )
   end
 
   def construct_expense_params_data
     {
-      date: params['date'],
-      expense_type: params['expense_type'],
-      payment_mode_name: params['payment_mode'],
-      bank_name: params['bank_name'],
-      description: params['description'],
-      amount: params['amount']
+      date: params['expense']['date'],
+      expense_type: params['expense']['expense_type'],
+      payment_mode: params['expense']['payment_mode'],
+      bank_name: params['expense']['bank_name'],
+      description: params['expense']['description'],
+      amount: params['expense']['amount']
     }.with_indifferent_access
   end
 end
