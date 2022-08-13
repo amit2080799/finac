@@ -18,7 +18,7 @@ class Expense < ApplicationRecord
   end
 
   def self.fetch_expenses
-    Expense.includes({ payment: %i[bank_detail payment_mode] }, :expense_type)
+    Expense.includes({ payment: %i[bank_detail payment_mode] }, :expense_type).order(date: :desc)
   end
 
   def fetch_expense_data
