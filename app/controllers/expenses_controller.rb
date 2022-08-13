@@ -7,7 +7,7 @@ class ExpensesController < ApplicationController
   # GET /expenses or /expenses.json
   def index
     all_expenses = Expense.fetch_expenses
-    @expenses = Kaminari.paginate_array(all_expenses).page(params[:page]).per(10)
+    @expenses = Kaminari.paginate_array(all_expenses).page(params[:page])
   end
 
   # GET /expenses/1 or /expenses/1.json

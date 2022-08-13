@@ -138,3 +138,8 @@ https://kirshatrov.com/posts/kaminari-custom-query/
 
 
             https://stackoverflow.com/questions/44817090/rails-5-association-one-to-one-updating-record-create-new-one
+
+
+
+
+            https://stackoverflow.com/questions/41646636/kaminari-pagination-for-custom-model
