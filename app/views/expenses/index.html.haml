@@ -36,4 +36,8 @@
                       %div.edit-btn
                         = link_to 'Edit', edit_expense_path(expense)
 
+        .row
+          = paginate @expenses, theme: 'bootstrap-5'
+
+
 %br

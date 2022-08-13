@@ -54,10 +54,12 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "sprockets-rails"
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'bootstrap', '~> 5.1.3'
+gem 'bootstrap5-kaminari-views'
 gem 'devise', '~> 4.8'
-gem "haml-rails", "~> 2.0"
-gem "bootstrap", "~> 5.1.3"
-gem "sassc-rails", "~> 2.1"
-gem "importmap-rails", "~> 1.0"
+gem 'haml-rails', '~> 2.0'
+gem 'importmap-rails', '~> 1.0'
+gem 'kaminari', git: 'https://github.com/amit2080799/kaminari', branch: 'master'
+gem 'sassc-rails', '~> 2.1'
+gem 'sprockets-rails'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
