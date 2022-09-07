@@ -11,7 +11,10 @@ class ExpensesController < ApplicationController
   end
 
   # GET /expenses/1 or /expenses/1.json
-  def show; end
+  def show
+    @expense = Expense.find params[:id]
+    render @expense
+  end
 
   # GET /expenses/new
   def new
@@ -69,6 +72,11 @@ class ExpensesController < ApplicationController
       format.html { redirect_to expenses_url, notice: 'Expense was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def sort
+    @sorted_expenses = Expense.sort_expenses(params[:name])
+    render json: @sorted_expenses
   end
 
   private

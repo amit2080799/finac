@@ -11,6 +11,10 @@
                 = link_to 'Add New Expense', new_expense_path, class: 'new_expense_btn_link'
 
         .row
+          .col-sm-2
+            = render "sorting_filter"
+
+        .row
           .form-group.col-sm-12
             %table.table
               %thead

@@ -9,3 +9,6 @@ tail -f /tmp/rails_server.log
 
 nohup sh your-script.sh &
 nohup sh your-script.sh > /path/to/custom.out &
+
+
+rake assets:precompile

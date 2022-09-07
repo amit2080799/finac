@@ -1,0 +1,8 @@
+%label{:for => "sorting-filter"} Sort By:
+%select.sorting_filter.form-select{"aria-label" => "Sorting Filter", "name" => "sorting_filter"}
+  %option{:selected => "selected"}
+    = 'Date'
+  - fetch_sorting_data.each do |name|
+    %option{:value => name} #{name}
+
+= javascript_include_tag "expenses"

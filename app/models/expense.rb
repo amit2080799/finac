@@ -7,6 +7,15 @@ class Expense < ApplicationRecord
 
   accepts_nested_attributes_for :payment
 
+  SORTING_ATTRIBUTES = {
+    'Date Asc': 'asc',
+    'Date Desc': 'desc',
+    'Expense Type': 'asc',
+    'Payment Mod': 'asc',
+    'Bank Name': 'asc',
+    'Amount': 'asc'
+  }.with_indifferent_access
+
   def create_expense(data)
     data = fetch_associated_data(data)
     create_expense_data(data)
@@ -19,6 +28,16 @@ class Expense < ApplicationRecord
 
   def self.fetch_expenses
     Expense.includes({ payment: %i[bank_detail payment_mode] }, :expense_type).order(date: :desc)
+  end
+
+  def self.sort_expenses(attribute)
+    sorting_data = SORTING_ATTRIBUTES.select { |sorting_attribute| sorting_attribute == attribute }
+    sorting_order = nil
+
+    if sorting_data.keys.first.include?('Date')
+      sorting_order = sorting_data[attribute]
+      Expense.includes({ payment: %i[bank_detail payment_mode] }, :expense_type).order(date: sorting_order)
+    end
   end
 
   def fetch_expense_data
