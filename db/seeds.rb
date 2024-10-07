@@ -9,21 +9,22 @@
 
 ExpenseType.create([
   {
-    expense_type: 'electricity'
+    name: 'electricity'
   },
   {
-    expense_type: 'loan'
+    name: 'loan'
   },
   {
-    expense_type: 'medical'
-  },{
-    expense_type: 'self'
+    name: 'medical'
   },
   {
-    expense_type: 'fuel'
+    name: 'self'
   },
   {
-    expense_type: 'miscellaneous'
+    name: 'fuel'
+  },
+  {
+    name: 'miscellaneous'
   }
   ])
 
