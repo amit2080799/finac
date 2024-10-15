@@ -57,9 +57,11 @@ end
 gem 'bootstrap', '~> 5.1.3'
 gem 'bootstrap5-kaminari-views'
 gem 'devise', '~> 4.8'
+gem 'font-awesome-rails'
 gem 'haml-rails', '~> 2.0'
 gem 'importmap-rails', '~> 1.0'
 gem 'kaminari', git: 'https://github.com/amit2080799/kaminari', branch: 'master'
 gem 'sassc-rails', '~> 2.1'
 gem 'sprockets-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'nokogiri', platforms: [:ruby]
