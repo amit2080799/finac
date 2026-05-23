@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
-  resources :expenses
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'expenses#index'
-
-  devise_scope :user do
-    # Redirests signing out users back to sign-in
-    get 'users', to: 'devise/sessions#new'
+  namespace :api do
+    namespace :v1, defaults: { format: :json } do
+      resource :session, only: %i[show create destroy]
+      resource :dashboard, only: :show
+      resource :options, only: :show
+      resources :expenses, only: %i[index show create update destroy]
+      resources :users
+    end
   end
 
-  devise_for :users
+  devise_for :users, skip: [:registrations]
+
+  root 'home#index'
+  get '*path', to: 'home#index', constraints: ->(request) {
+    !request.path.start_with?('/api', '/rails/', '/packs/', '/users/')
+  }
 end

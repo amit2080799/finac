@@ -56,6 +56,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'bootstrap', '~> 5.1.3'
 gem 'bootstrap5-kaminari-views'
+gem 'cancancan'
 gem 'devise', '~> 4.8'
 gem 'font-awesome-rails'
 gem 'haml-rails', '~> 2.0'

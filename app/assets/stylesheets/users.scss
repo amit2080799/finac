@@ -1,0 +1,67 @@
+.users-page {
+  max-width: 960px;
+}
+
+.role-picker__grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.role-picker__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 1rem 1rem 1rem 2.75rem;
+  border: 2px solid #dee2e6;
+  border-radius: 0.75rem;
+  background: #fff;
+  text-align: left;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.role-picker__card:hover:not(:disabled) {
+  border-color: var(--role-accent);
+  box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.role-picker__card.is-selected {
+  border-color: var(--role-accent);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--role-accent) 25%, transparent);
+}
+
+.role-picker__card:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.role-picker__indicator {
+  position: absolute;
+  left: 1rem;
+  top: 1.15rem;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #adb5bd;
+  border-radius: 50%;
+}
+
+.role-picker__card.is-selected .role-picker__indicator {
+  border-color: var(--role-accent);
+  background: radial-gradient(circle at center, var(--role-accent) 45%, transparent 46%);
+}
+
+.role-picker__title {
+  font-weight: 600;
+  color: #212529;
+}
+
+.role-picker__description {
+  font-size: 0.875rem;
+  color: #6c757d;
+  line-height: 1.4;
+}

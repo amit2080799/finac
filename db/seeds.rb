@@ -57,3 +57,13 @@ BankDetail.create([
     name: 'SBI'
   }
 ])
+
+if User.none?
+  User.create!(
+    email: 'admin@finac.local',
+    password: 'changeme123',
+    password_confirmation: 'changeme123',
+    role: :super_admin
+  )
+  puts 'Created super admin: admin@finac.local / changeme123'
+end

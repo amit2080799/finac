@@ -1,61 +1,38 @@
 # frozen_string_literal: true
 
-# Expense model
 class Expense < ApplicationRecord
-  has_one :payment, dependent: :destroy
   belongs_to :expense_type
+  has_one :payment, dependent: :destroy
 
   accepts_nested_attributes_for :payment
 
-  def create_expense(data)
-    data = fetch_associated_data(data)
-    create_expense_data(data)
+  validates :date, presence: true
+  validates :expense_type, presence: true
+  validates :payment, presence: true
+
+  scope :ordered, -> { order(date: :desc, created_at: :desc) }
+  scope :in_month, lambda { |month = Date.current|
+    where(date: month.beginning_of_month..month.end_of_month)
+  }
+
+  def self.list_with_associations
+    includes(:expense_type, payment: %i[payment_mode bank_detail]).ordered
   end
 
-  def update_expense(data)
-    data = fetch_associated_data(data)
-    update_expense_data(data)
-  end
+  def self.month_summary(month = Date.current)
+    expenses = list_with_associations.in_month(month)
+    payments = expenses.map(&:payment).compact
+    amounts_by_type = expenses.each_with_object(Hash.new(0.to_d)) do |expense, totals|
+      next unless expense.payment && expense.expense_type
 
-  def self.fetch_expenses
-    Expense.includes({ payment: %i[bank_detail payment_mode] }, :expense_type).order(date: :desc)
-  end
+      totals[expense.expense_type.name] += expense.payment.amount.to_d
+    end
 
-  def fetch_expense_data
-    @expense_types = ExpenseType.all
-    @payment_modes = PaymentMode.all
-    @bank_details = BankDetail.all
-
-    [@expense_types, @payment_modes, @bank_details]
-  end
-
-  def create_expense_data(data)
-    expense = construct_expense_params(data)
-    Expense.create(expense)
-  end
-
-  def update_expense_data(data)
-    expense = construct_expense_params(data)
-    update(expense)
-  end
-
-  def construct_expense_params(data)
     {
-      date: data['date'],
-      expense_type_id: data['expense_type_id'],
-      description: data['description'],
-      payment_attributes: {
-        bank_detail_id: data['bank_detail_id'],
-        payment_mode_id: data['payment_mode_id'],
-        amount: data['amount']
-      }
-    }.with_indifferent_access
-  end
-
-  def fetch_associated_data(data)
-    data['expense_type_id'] = ExpenseType.find_by(name: data['expense_type']).try(:id)
-    data['payment_mode_id'] = PaymentMode.find_by(name: data['payment_mode']).try(:id)
-    data['bank_detail_id'] = BankDetail.find_by(name: data['bank_name']).try(:id)
-    data
+      total_expenses: payments.sum { |payment| payment.amount.to_d },
+      transactions_count: expenses.size,
+      latest_expense_date: expenses.maximum(:date),
+      top_category: amounts_by_type.max_by { |_name, amount| amount }&.first
+    }
   end
 end
